@@ -4,7 +4,7 @@ export const MAP_DATA: Record<string, number> = {
   "Taego": 8000,
   "Deston": 8000,
   "Rondo": 8000,
-  "Vikendi": 8000,  // Fixed: 8x8, not 6x6
+  "Vikendi": 8000, 
   "Sanhok": 4000,
   "Paramo": 3000,
   "Karakin": 2000
@@ -63,9 +63,7 @@ export const roundDistance = (meters: number): number => {
   return Math.round(meters / 50) * 50;
 };
 
-// ===========================================
-// Jump Distance Rules (meters from target)
-// ===========================================
+
 
 // 8x8 maps: default 800m jump distance (standard dive)
 export const JUMP_DISTANCE_8X8 = 800;
@@ -205,7 +203,7 @@ export const getFlyDistance = (map: string): number => {
 
 // Colors - Matching neumorphic design palette
 export const COLORS = {
-  PLANE_PATH: '#60a5fa', // Blue-400 (softer)
+  PLANE_PATH: '#60a5fa', // Blue-400 
   DESTINATION: '#f87171', // Red-400
   JUMP_POINT: '#34d399', // Emerald-400
   DIVE_POINT: '#fbbf24', // Amber-400
