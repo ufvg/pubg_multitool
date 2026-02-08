@@ -1,0 +1,370 @@
+/* PUBG Drop Calculator - Theme System */
+
+/* Dark Theme (default) */
+:root,
+[data-theme="dark"] {
+  --bg-primary: #0f0f0f;
+  --bg-secondary: #1a1a1a;
+  --bg-tertiary: #0a0a0a;
+  --bg-card: #141414;
+  --accent-primary: #ffffff;
+  --accent-secondary: #e5e5e5;
+  --accent-glow: rgba(255, 255, 255, 0.15);
+  --text-primary: #ffffff;
+  --text-secondary: #a3a3a3;
+  --text-muted: #525252;
+  --border-color: rgba(255, 255, 255, 0.1);
+  --success: #22c55e;
+  --warning: #eab308;
+  --danger: #ef4444;
+  --info: #3b82f6;
+
+  /* Neumorphic shadows for dark */
+  --shadow-raised:
+    6px 6px 12px rgba(0, 0, 0, 0.8),
+    -6px -6px 12px rgba(255, 255, 255, 0.03);
+  --shadow-inset:
+    inset 4px 4px 8px rgba(0, 0, 0, 0.6),
+    inset -4px -4px 8px rgba(255, 255, 255, 0.02);
+  --shadow-glow: 0 0 20px var(--accent-glow);
+}
+
+/* Light Theme */
+[data-theme="light"] {
+  --bg-primary: #f5f5f5;
+  --bg-secondary: #e5e5e5;
+  --bg-tertiary: #fafafa;
+  --bg-card: #ffffff;
+  --accent-primary: #171717;
+  --accent-secondary: #262626;
+  --accent-glow: rgba(0, 0, 0, 0.1);
+  --text-primary: #171717;
+  --text-secondary: #525252;
+  --text-muted: #a3a3a3;
+  --border-color: rgba(0, 0, 0, 0.1);
+  --success: #16a34a;
+  --warning: #ca8a04;
+  --danger: #dc2626;
+  --info: #2563eb;
+
+  /* Neumorphic shadows for light */
+  --shadow-raised:
+    6px 6px 12px rgba(0, 0, 0, 0.1),
+    -6px -6px 12px rgba(255, 255, 255, 0.8);
+  --shadow-inset:
+    inset 4px 4px 8px rgba(0, 0, 0, 0.08),
+    inset -4px -4px 8px rgba(255, 255, 255, 0.9);
+  --shadow-glow: 0 0 20px var(--accent-glow);
+}
+
+/* Map Theme (dynamic - set via JS) */
+[data-theme="map"] {
+  --bg-primary: var(--map-primary, #1a1a1a);
+  --bg-secondary: var(--map-secondary, #0f0f0f);
+  --bg-tertiary: color-mix(in srgb, var(--map-primary, #1a1a1a) 80%, black);
+  --bg-card: color-mix(in srgb, var(--map-primary, #1a1a1a) 90%, white 10%);
+  --accent-primary: var(--map-accent, #ffffff);
+  --accent-secondary: var(--map-text, #e5e5e5);
+  --accent-glow: color-mix(in srgb, var(--map-accent, #ffffff) 20%, transparent);
+  --text-primary: var(--map-text, #ffffff);
+  --text-secondary: color-mix(in srgb, var(--map-text, #ffffff) 70%, transparent);
+  --text-muted: color-mix(in srgb, var(--map-text, #ffffff) 40%, transparent);
+  --border-color: color-mix(in srgb, var(--map-accent, #ffffff) 15%, transparent);
+
+  --shadow-raised:
+    6px 6px 12px rgba(0, 0, 0, 0.5),
+    -6px -6px 12px color-mix(in srgb, var(--map-accent, #ffffff) 5%, transparent);
+  --shadow-inset:
+    inset 4px 4px 8px rgba(0, 0, 0, 0.4),
+    inset -4px -4px 8px color-mix(in srgb, var(--map-accent, #ffffff) 3%, transparent);
+}
+
+/* Base styles */
+body {
+  margin: 0;
+  overflow: hidden;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* Canvas styles */
+canvas {
+  cursor: crosshair;
+  border-radius: 12px;
+  transition: box-shadow 0.3s ease;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: high-quality;
+  filter: contrast(1.05) saturate(1.1);
+}
+
+canvas:hover {
+  box-shadow: var(--shadow-glow);
+}
+
+/* Neumorphic components */
+.neu-card {
+  background: var(--bg-card);
+  box-shadow: var(--shadow-raised);
+  border-radius: 16px;
+  border: 1px solid var(--border-color);
+  transition: all 0.3s ease;
+}
+
+.neu-inset {
+  background: var(--bg-tertiary);
+  box-shadow: var(--shadow-inset);
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+.neu-button {
+  background: var(--bg-secondary);
+  box-shadow: var(--shadow-raised);
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  padding: 10px 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.neu-button:hover {
+  box-shadow: var(--shadow-glow), var(--shadow-raised);
+  transform: translateY(-1px);
+}
+
+.neu-button:active {
+  box-shadow: var(--shadow-inset);
+  transform: translateY(0);
+}
+
+.neu-button.active {
+  background: var(--accent-primary);
+  color: var(--bg-primary);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes pulse {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes glow {
+
+  0%,
+  100% {
+    box-shadow: 0 0 5px var(--accent-glow);
+  }
+
+  50% {
+    box-shadow: 0 0 20px var(--accent-glow);
+  }
+}
+
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-out forwards;
+}
+
+.animate-slide-in {
+  animation: slideIn 0.25s ease-out forwards;
+}
+
+.animate-pulse-slow {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.animate-glow {
+  animation: glow 2s ease-in-out infinite;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Staggered animations */
+.stagger-1 {
+  animation-delay: 0.05s;
+}
+
+.stagger-2 {
+  animation-delay: 0.1s;
+}
+
+.stagger-3 {
+  animation-delay: 0.15s;
+}
+
+.stagger-4 {
+  animation-delay: 0.2s;
+}
+
+/* Gradient text */
+.gradient-text {
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Status indicators */
+.status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.status-dot.success {
+  background: var(--success);
+  box-shadow: 0 0 8px var(--success);
+}
+
+.status-dot.warning {
+  background: var(--warning);
+  box-shadow: 0 0 8px var(--warning);
+}
+
+.status-dot.danger {
+  background: var(--danger);
+  box-shadow: 0 0 8px var(--danger);
+}
+
+.status-dot.info {
+  background: var(--info);
+  box-shadow: 0 0 8px var(--info);
+}
+
+/* Progress bar */
+.progress-bar {
+  height: 3px;
+  background: var(--bg-tertiary);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: var(--accent-primary);
+  border-radius: 2px;
+  transition: width 0.4s ease;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-tertiary);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--bg-secondary);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-primary);
+}
+
+/* Select styling */
+select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3E%3Cpath fill='%23888' d='M5 7L1 3h8z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 32px !important;
+}
+
+/* Focus states */
+*:focus {
+  outline: none;
+}
+
+*:focus-visible {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 2px;
+}
+
+/* Theme toggle button group */
+.theme-toggle {
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  background: var(--bg-tertiary);
+  border-radius: 8px;
+}
+
+.theme-toggle button {
+  padding: 6px 10px;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 11px;
+  transition: all 0.2s ease;
+}
+
+.theme-toggle button:hover {
+  color: var(--text-primary);
+}
+
+.theme-toggle button.active {
+  background: var(--bg-card);
+  color: var(--text-primary);
+  box-shadow: var(--shadow-raised);
+}
+
+/* Utility */
+.transition-all-smooth {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}

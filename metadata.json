@@ -1,0 +1,5 @@
+{
+  "name": "PUBG Drop Calc",
+  "description": "A high-precision tactical drop calculator for PUBG using game physics and map scaling.",
+  "requestFramePermissions": []
+}
